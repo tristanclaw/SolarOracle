@@ -56,49 +56,67 @@ const SolarOracle = () => {
       <section className="flex-grow flex flex-col justify-center items-center pt-32 pb-20 container mx-auto px-6 relative">
         <FadeIn className="text-center max-w-4xl mx-auto relative z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-black/10 rounded-full bg-white/50 backdrop-blur-sm mb-10">
-            <div className="w-1.5 h-1.5 bg-accent rounded-full"></div>
-            <span className="font-mono text-[10px] uppercase tracking-widest text-ink/60">Prototype v0.1 // Status: Concept</span>
+            <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-ink/60">Status: Architecture Phase // Seeking Contributors</span>
           </div>
           
           <h1 className="font-display font-bold text-6xl md:text-8xl lg:text-9xl leading-[0.9] tracking-tighter mb-8 text-ink">
-            The Internet,<br/>
-            Without the Screen.
+            The Blueprint for<br/>
+            Offline Knowledge.
           </h1>
           
           <p className="text-xl md:text-2xl text-ink/60 leading-relaxed mb-12 max-w-2xl mx-auto font-light">
             The world's first offline, solar-powered speech interface for the unconnected billion.
           </p>
           
-          <button className="bg-ink hover:bg-black text-white px-10 py-5 rounded-full font-bold tracking-tight transition-all text-sm flex items-center gap-3 mx-auto hover:scale-105">
-            Read the Whitepaper <ArrowRight className="w-4 h-4" />
-          </button>
+          <a href="#roadmap" className="bg-ink hover:bg-black text-white px-10 py-5 rounded-full font-bold tracking-tight transition-all text-sm flex items-center gap-3 mx-auto hover:scale-105 inline-flex">
+            View the Roadmap <ArrowRight className="w-4 h-4" />
+          </a>
         </FadeIn>
 
-        {/* Abstract Schematic */}
-        <FadeIn delay={0.4} className="mt-20 relative w-full max-w-md h-96 flex items-end justify-center">
-            {/* The Kiosk Pillar */}
-            <div className="w-40 h-80 bg-stone-200 rounded-t-3xl relative overflow-hidden border border-black/5 shadow-2xl">
-              {/* Speaker Grille Pattern */}
-              <div className="absolute top-24 left-0 right-0 grid grid-cols-4 gap-2 px-6 opacity-20">
-                 {[...Array(12)].map((_,i) => (
-                    <div key={i} className="w-1 h-1 bg-black rounded-full mx-auto"></div>
-                 ))}
-              </div>
+        {/* Blueprint Schematic */}
+        <FadeIn delay={0.4} className="mt-24 relative w-full max-w-md h-96 flex items-end justify-center">
+            {/* The Kiosk Pillar - Wireframe */}
+            <div className="w-48 h-80 border-2 border-dashed border-ink/20 rounded-t-3xl relative flex items-center justify-center">
               
-              {/* Vertical Line Detail */}
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-32 bg-black/10"></div>
+              {/* Internal Structure Lines */}
+              <div className="absolute inset-x-4 top-24 bottom-4 border border-ink/10 rounded-t-xl"></div>
+              <div className="absolute top-32 left-0 right-0 h-px bg-ink/10 w-full"></div>
+              <div className="absolute bottom-12 left-0 right-0 h-px bg-ink/10 w-full"></div>
+              
+              {/* Dimension Labels */}
+              <div className="absolute -left-8 top-1/2 -translate-y-1/2 -rotate-90 text-[10px] font-mono text-ink/40 tracking-widest">
+                 HEIGHT: 1.5M
+              </div>
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-mono text-ink/40 tracking-widest">
+                 WIDTH: 0.4M
+              </div>
+
+              {/* Center Axis */}
+              <div className="absolute top-0 bottom-0 w-px bg-ink/10 border-r border-dashed border-ink/20"></div>
+
+              {/* Label */}
+              <div className="absolute bottom-4 bg-white px-2 py-1 text-[9px] font-mono text-ink border border-ink/20">
+                 MAIN_CHASSIS
+              </div>
             </div>
             
-            {/* The Solar Roof (Floating) */}
+            {/* The Solar Roof (Floating Wireframe) */}
             <motion.div 
                initial={{ y: -10 }}
                animate={{ y: 0 }}
                transition={{ duration: 4, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-               className="absolute top-0 w-64 h-4 bg-ink rounded-full shadow-lg z-20"
-            ></motion.div>
+               className="absolute top-0 w-72 h-16 border-2 border-dashed border-ink/20 rounded-full bg-white/50 backdrop-blur-sm flex items-center justify-center z-20"
+            >
+               <div className="w-full h-px bg-ink/10 absolute"></div>
+               <div className="h-full w-px bg-ink/10 absolute"></div>
+               <div className="bg-white px-2 py-0.5 text-[9px] font-mono text-ink border border-ink/20 relative z-10">
+                  SOLAR_ARRAY
+               </div>
+            </motion.div>
             
-            {/* Ground Shadow */}
-            <div className="absolute -bottom-4 w-64 h-4 bg-black/10 blur-xl rounded-full"></div>
+            {/* Connection Lines */}
+            <div className="absolute top-8 w-px h-16 border-l border-dashed border-ink/30"></div>
         </FadeIn>
       </section>
 
@@ -225,8 +243,43 @@ const SolarOracle = () => {
         </div>
       </section>
 
+      {/* Roadmap Section */}
+      <section id="roadmap" className="py-32 bg-bone border-t border-black/5">
+         <div className="container mx-auto px-6">
+            <FadeIn>
+               <div className="max-w-4xl mx-auto text-center mb-16">
+                  <h2 className="font-display font-bold text-4xl tracking-tighter mb-4 text-ink">
+                     Project Roadmap.
+                  </h2>
+                  <p className="text-ink/60">We are building in the open. Join us.</p>
+               </div>
+            </FadeIn>
+
+            <div className="max-w-3xl mx-auto space-y-8">
+               {[
+                  { phase: "01", title: "Architecture & Design", status: "Active", desc: "Defining hardware specs, power budget, and RAG pipeline." },
+                  { phase: "02", title: "Prototype Build", status: "Q3 2026", desc: "First physical assembly and thermal testing." },
+                  { phase: "03", title: "Field Trials", status: "Q4 2026", desc: "Deployment of 5 units to partner communities." }
+               ].map((step, i) => (
+                  <FadeIn key={i} delay={i * 0.1} className="flex gap-8 items-start border-b border-black/5 pb-8">
+                     <div className="font-display font-bold text-2xl text-ink/20">{step.phase}</div>
+                     <div>
+                        <div className="flex items-center gap-3 mb-2">
+                           <h3 className="font-display font-bold text-xl">{step.title}</h3>
+                           <span className={`text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full ${step.status === 'Active' ? 'bg-accent text-white' : 'bg-black/5 text-ink/40'}`}>
+                              {step.status}
+                           </span>
+                        </div>
+                        <p className="text-ink/60 text-sm">{step.desc}</p>
+                     </div>
+                  </FadeIn>
+               ))}
+            </div>
+         </div>
+      </section>
+
       {/* Impact Section */}
-      <section id="impact" className="py-32 bg-bone border-t border-black/5">
+      <section id="impact" className="py-32 bg-white border-t border-black/5">
          <div className="container mx-auto px-6">
             <FadeIn>
                <div className="max-w-4xl mx-auto text-center">
@@ -244,7 +297,7 @@ const SolarOracle = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-20 bg-white border-t border-black/5">
+      <footer className="py-20 bg-bone border-t border-black/5">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-end gap-8">
              <div>
