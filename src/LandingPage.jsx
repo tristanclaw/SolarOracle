@@ -4,12 +4,9 @@ import {
   Sun, 
   Mic, 
   Cpu, 
-  Database, 
-  ArrowRight, 
-  Box, 
-  Zap, 
   Radio,
-  Github
+  Github,
+  ArrowRight
 } from 'lucide-react';
 
 const FadeIn = ({ children, delay = 0, className = "" }) => (
@@ -26,7 +23,7 @@ const FadeIn = ({ children, delay = 0, className = "" }) => (
 
 const SolarOracle = () => {
   return (
-    <div className="min-h-screen bg-bone text-ink font-sans selection:bg-black selection:text-white overflow-x-hidden">
+    <div className="min-h-screen bg-bone text-ink font-sans selection:bg-black selection:text-white overflow-x-hidden flex flex-col">
       
       {/* Navbar */}
       <nav className="fixed w-full z-50 bg-bone/80 backdrop-blur-md border-b border-black/5">
@@ -52,61 +49,54 @@ const SolarOracle = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="pt-40 pb-20 container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="max-w-xl">
-            <FadeIn>
-              <h1 className="font-display font-bold text-6xl md:text-8xl leading-[0.9] tracking-tighter mb-8 text-ink">
-                Internet.<br/>
-                Without<br/>
-                Screens.
-              </h1>
-            </FadeIn>
-
-            <FadeIn delay={0.2}>
-              <p className="text-lg md:text-xl text-ink/60 leading-relaxed mb-10 max-w-sm">
-                The first offline speech interface for the unconnected world. No grid. No literacy required.
-              </p>
-            </FadeIn>
-
-            <FadeIn delay={0.3}>
-              <div className="flex gap-4">
-                <button className="bg-accent hover:bg-amber-700 text-white px-8 py-4 rounded-lg font-bold tracking-tight transition-all text-sm flex items-center gap-2">
-                  Read Whitepaper <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-            </FadeIn>
+      {/* Full-Screen Hero */}
+      <section className="flex-grow flex flex-col justify-center items-center pt-32 pb-20 container mx-auto px-6 relative">
+        <FadeIn className="text-center max-w-4xl mx-auto relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-black/10 rounded-full bg-white/50 backdrop-blur-sm mb-10">
+            <div className="w-1.5 h-1.5 bg-accent rounded-full"></div>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-ink/60">Prototype v0.1 // Status: Concept</span>
           </div>
+          
+          <h1 className="font-display font-bold text-6xl md:text-8xl lg:text-9xl leading-[0.9] tracking-tighter mb-8 text-ink">
+            The Internet,<br/>
+            Without the Screen.
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-ink/60 leading-relaxed mb-12 max-w-2xl mx-auto font-light">
+            The world's first offline, solar-powered speech interface for the unconnected billion.
+          </p>
+          
+          <button className="bg-ink hover:bg-black text-white px-10 py-5 rounded-full font-bold tracking-tight transition-all text-sm flex items-center gap-3 mx-auto hover:scale-105">
+            Read the Whitepaper <ArrowRight className="w-4 h-4" />
+          </button>
+        </FadeIn>
 
-          <FadeIn delay={0.4} className="relative aspect-square bg-stone-200 rounded-3xl overflow-hidden shadow-2xl">
-             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1621503348633-8a3d4678125a?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center mix-blend-multiply opacity-50 grayscale"></div>
-             <div className="absolute inset-0 flex items-center justify-center">
-                {/* Conceptual Render Placeholder - CSS Art */}
-                <div className="w-56 h-[22rem] bg-[#2a2a2a] rounded-[2.5rem] shadow-2xl relative flex flex-col items-center p-6 border border-white/10 ring-1 ring-black/20">
-                   {/* Solar Top */}
-                   <div className="w-full h-1/3 bg-black/40 rounded-[1.5rem] border border-white/5 flex items-center justify-center mb-6 overflow-hidden relative">
-                      <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.05)_50%,transparent_75%)] bg-[length:10px_10px]"></div>
-                      <Sun className="text-white/20 w-8 h-8 relative z-10" />
-                   </div>
-                   {/* Speaker Grille */}
-                   <div className="w-full grid grid-cols-4 gap-3 px-4">
-                      {[...Array(16)].map((_,i) => (
-                        <div key={i} className="w-1.5 h-1.5 bg-white/20 rounded-full mx-auto"></div>
-                      ))}
-                   </div>
-                   {/* Status Light */}
-                   <div className="mt-auto w-full flex justify-center">
-                      <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_rgba(217,119,6,0.8)]"></div>
-                   </div>
-                   
-                   <div className="absolute -right-12 top-10 rotate-90 origin-left text-[8px] font-mono text-ink/40 tracking-widest uppercase whitespace-nowrap">
-                      Fig 1.0 — Prototype
-                   </div>
-                </div>
-             </div>
-          </FadeIn>
-        </div>
+        {/* Abstract Schematic */}
+        <FadeIn delay={0.4} className="mt-20 relative w-full max-w-md h-96 flex items-end justify-center">
+            {/* The Kiosk Pillar */}
+            <div className="w-40 h-80 bg-stone-200 rounded-t-3xl relative overflow-hidden border border-black/5 shadow-2xl">
+              {/* Speaker Grille Pattern */}
+              <div className="absolute top-24 left-0 right-0 grid grid-cols-4 gap-2 px-6 opacity-20">
+                 {[...Array(12)].map((_,i) => (
+                    <div key={i} className="w-1 h-1 bg-black rounded-full mx-auto"></div>
+                 ))}
+              </div>
+              
+              {/* Vertical Line Detail */}
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-32 bg-black/10"></div>
+            </div>
+            
+            {/* The Solar Roof (Floating) */}
+            <motion.div 
+               initial={{ y: -10 }}
+               animate={{ y: 0 }}
+               transition={{ duration: 4, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+               className="absolute top-0 w-64 h-4 bg-ink rounded-full shadow-lg z-20"
+            ></motion.div>
+            
+            {/* Ground Shadow */}
+            <div className="absolute -bottom-4 w-64 h-4 bg-black/10 blur-xl rounded-full"></div>
+        </FadeIn>
       </section>
 
       {/* Specs Bento Grid */}
