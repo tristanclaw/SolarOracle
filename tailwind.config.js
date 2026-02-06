@@ -13,6 +13,7 @@ export default {
       colors: {
         bone: '#F4F4F0',
         ink: '#18181B',
+        accent: '#D97706', // Industrial Safety Orange
       }
     },
   },
