@@ -11,7 +11,10 @@ import {
   HeartPulse,
   Wrench,
   CheckCircle2,
-  Circle
+  Circle,
+  Zap,
+  Code,
+  Box
 } from 'lucide-react';
 
 const FadeIn = ({ children, delay = 0, className = "" }) => (
@@ -323,26 +326,57 @@ const SolarOracle = () => {
          </div>
       </section>
 
-      {/* Impact Section */}
-      <section id="impact" className="py-32 bg-bone border-t border-black/5">
+      {/* Help Build It (Open Roles) */}
+      <section className="py-32 bg-[#18181B] text-bone">
          <div className="container mx-auto px-6">
-            <FadeIn>
-               <div className="max-w-4xl mx-auto text-center">
-                  <h2 className="font-display font-bold text-5xl tracking-tighter mb-8 text-ink">
-                     Designing for the<br/>
-                     <span className="text-accent">Other 2.6 Billion.</span>
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+               <FadeIn>
+                  <h2 className="font-display font-bold text-5xl tracking-tighter mb-4 text-white">
+                     This is Open Hardware.<br/>
+                     <span className="text-stone-500">We need hands.</span>
                   </h2>
-                  <p className="text-xl text-ink/60 leading-relaxed font-light">
-                     We believe access to knowledge is a fundamental human right. 
-                     The Solar Oracle bridges the digital divide without requiring literacy or electricity.
-                  </p>
-               </div>
-            </FadeIn>
+               </FadeIn>
+               <FadeIn delay={0.2}>
+                   <a 
+                     href="https://github.com/tristanclaw/SolarOracle" 
+                     className="bg-accent hover:bg-amber-700 text-white px-8 py-4 rounded-full font-bold tracking-tight transition-all text-sm flex items-center gap-2"
+                   >
+                     <Github className="w-4 h-4" />
+                     Contribute on GitHub
+                   </a>
+               </FadeIn>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+               {[
+                  {
+                     icon: Zap,
+                     role: "Electrical Engineers",
+                     task: "Help design the BMS and Solar charging circuits for maximum efficiency."
+                  },
+                  {
+                     icon: Code,
+                     role: "Python Developers",
+                     task: "Assist with LFM 2.5 integration, RAG logic, and audio pipeline."
+                  },
+                  {
+                     icon: Box,
+                     role: "Industrial Designers",
+                     task: "Optimize the enclosure for passive cooling in 45°C+ environments."
+                  }
+               ].map((job, i) => (
+                  <FadeIn key={i} delay={i * 0.1} className="bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors group">
+                     <job.icon className="w-8 h-8 text-stone-500 mb-6 group-hover:text-accent transition-colors" />
+                     <h3 className="font-display font-bold text-xl mb-3">{job.role}</h3>
+                     <p className="text-stone-400 text-sm leading-relaxed">{job.task}</p>
+                  </FadeIn>
+               ))}
+            </div>
          </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-20 bg-white border-t border-black/5">
+      <footer className="py-20 bg-bone border-t border-black/5">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-end gap-8">
              <div>
