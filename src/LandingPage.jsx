@@ -126,53 +126,41 @@ const SolarOracle = () => {
         </FadeIn>
       </section>
 
-      {/* Universal Knowledge Section */}
+      {/* Planned Capabilities (Replaces Universal Knowledge) */}
       <section id="knowledge" className="py-32 bg-bone border-t border-black/5">
          <div className="container mx-auto px-6">
             <FadeIn>
-               <h2 className="font-display font-bold text-4xl tracking-tighter mb-16 text-center">Deployable Expertise.</h2>
+               <h2 className="font-display font-bold text-4xl tracking-tighter mb-16 text-center">Planned Capabilities.</h2>
             </FadeIn>
 
             <div className="grid md:grid-cols-3 gap-8">
                {[
                   {
-                     icon: Sprout,
-                     title: "Farming",
-                     desc: "Instant answers on crop disease, planting cycles, and livestock health.",
-                     q: "How do I stop weevils?",
-                     a: "Dry maize thoroughly and use ash..."
+                     title: "Agricultural Triage",
+                     input: "My maize has white spots.",
+                     output: "Diagnosis and organic treatment options."
                   },
                   {
-                     icon: HeartPulse,
-                     title: "First Aid",
-                     desc: "Emergency triage protocols and basic medical guidance when no doctor is near.",
-                     q: "Treatment for burn?",
-                     a: "Cool water immediately..."
+                     title: "Emergency Health",
+                     input: "How to treat a scorpion sting?",
+                     output: "Immediate first-aid steps while seeking help."
                   },
                   {
-                     icon: Wrench,
-                     title: "Infrastructure",
-                     desc: "Repair guides for pumps, generators, and local machinery.",
-                     q: "Pump not starting.",
-                     a: "Check the intake valve..."
+                     title: "Equipment Repair",
+                     input: "Solar pump error code 4.",
+                     output: "Troubleshooting steps from the manual."
                   }
                ].map((item, i) => (
-                  <FadeIn key={i} delay={i * 0.1} className="bg-white p-8 rounded-2xl shadow-sm border border-transparent hover:border-black/5 transition-colors group">
-                     <div className="w-12 h-12 bg-bone rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent/10 transition-colors">
-                        <item.icon className="w-6 h-6 text-ink group-hover:text-accent transition-colors" />
-                     </div>
-                     <h3 className="font-display font-bold text-2xl tracking-tight mb-4">{item.title}</h3>
-                     <p className="text-ink/60 mb-8 leading-relaxed h-20">{item.desc}</p>
-                     
-                     {/* Chat Bubble Visual */}
-                     <div className="bg-bone rounded-xl p-4 text-xs font-mono space-y-3 opacity-60 group-hover:opacity-100 transition-opacity">
-                        <div className="flex gap-2">
-                           <div className="w-1 h-full bg-black/20 rounded-full"></div>
-                           <span className="text-ink/50">Q: "{item.q}"</span>
+                  <FadeIn key={i} delay={i * 0.1} className="border border-ink/20 rounded-2xl p-8 hover:border-ink/50 transition-colors">
+                     <h3 className="font-display font-bold text-xl tracking-tight mb-6">{item.title}</h3>
+                     <div className="space-y-4 text-sm">
+                        <div>
+                           <div className="text-[10px] font-mono text-ink/40 uppercase tracking-widest mb-1">Input</div>
+                           <p className="font-medium text-ink">"{item.input}"</p>
                         </div>
-                        <div className="flex gap-2">
-                           <div className="w-1 h-full bg-accent rounded-full"></div>
-                           <span className="text-ink font-medium">A: "{item.a}"</span>
+                        <div>
+                           <div className="text-[10px] font-mono text-ink/40 uppercase tracking-widest mb-1">Output</div>
+                           <p className="text-ink/60">"{item.output}"</p>
                         </div>
                      </div>
                   </FadeIn>
