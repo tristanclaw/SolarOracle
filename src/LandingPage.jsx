@@ -6,7 +6,10 @@ import {
   Cpu, 
   Radio,
   Github,
-  ArrowRight
+  ArrowRight,
+  Sprout,
+  HeartPulse,
+  Wrench
 } from 'lucide-react';
 
 const FadeIn = ({ children, delay = 0, className = "" }) => (
@@ -35,8 +38,8 @@ const SolarOracle = () => {
           <div className="flex items-center gap-8">
              <div className="hidden md:flex gap-8 text-sm font-medium text-ink/60">
                 <a href="#vision" className="hover:text-ink transition-colors">Vision</a>
+                <a href="#knowledge" className="hover:text-ink transition-colors">Knowledge</a>
                 <a href="#specs" className="hover:text-ink transition-colors">Specs</a>
-                <a href="#impact" className="hover:text-ink transition-colors">Impact</a>
              </div>
              <a 
                href="https://github.com/tristanclaw/SolarOracle" 
@@ -97,6 +100,61 @@ const SolarOracle = () => {
             {/* Ground Shadow */}
             <div className="absolute -bottom-4 w-64 h-4 bg-black/10 blur-xl rounded-full"></div>
         </FadeIn>
+      </section>
+
+      {/* Universal Knowledge Section */}
+      <section id="knowledge" className="py-32 bg-bone border-t border-black/5">
+         <div className="container mx-auto px-6">
+            <FadeIn>
+               <h2 className="font-display font-bold text-4xl tracking-tighter mb-16 text-center">Deployable Expertise.</h2>
+            </FadeIn>
+
+            <div className="grid md:grid-cols-3 gap-8">
+               {[
+                  {
+                     icon: Sprout,
+                     title: "Farming",
+                     desc: "Instant answers on crop disease, planting cycles, and livestock health.",
+                     q: "How do I stop weevils?",
+                     a: "Dry maize thoroughly and use ash..."
+                  },
+                  {
+                     icon: HeartPulse,
+                     title: "First Aid",
+                     desc: "Emergency triage protocols and basic medical guidance when no doctor is near.",
+                     q: "Treatment for burn?",
+                     a: "Cool water immediately..."
+                  },
+                  {
+                     icon: Wrench,
+                     title: "Infrastructure",
+                     desc: "Repair guides for pumps, generators, and local machinery.",
+                     q: "Pump not starting.",
+                     a: "Check the intake valve..."
+                  }
+               ].map((item, i) => (
+                  <FadeIn key={i} delay={i * 0.1} className="bg-white p-8 rounded-2xl shadow-sm border border-transparent hover:border-black/5 transition-colors group">
+                     <div className="w-12 h-12 bg-bone rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent/10 transition-colors">
+                        <item.icon className="w-6 h-6 text-ink group-hover:text-accent transition-colors" />
+                     </div>
+                     <h3 className="font-display font-bold text-2xl tracking-tight mb-4">{item.title}</h3>
+                     <p className="text-ink/60 mb-8 leading-relaxed h-20">{item.desc}</p>
+                     
+                     {/* Chat Bubble Visual */}
+                     <div className="bg-bone rounded-xl p-4 text-xs font-mono space-y-3 opacity-60 group-hover:opacity-100 transition-opacity">
+                        <div className="flex gap-2">
+                           <div className="w-1 h-full bg-black/20 rounded-full"></div>
+                           <span className="text-ink/50">Q: "{item.q}"</span>
+                        </div>
+                        <div className="flex gap-2">
+                           <div className="w-1 h-full bg-accent rounded-full"></div>
+                           <span className="text-ink font-medium">A: "{item.a}"</span>
+                        </div>
+                     </div>
+                  </FadeIn>
+               ))}
+            </div>
+         </div>
       </section>
 
       {/* Specs Bento Grid */}
