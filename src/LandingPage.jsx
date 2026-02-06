@@ -1,221 +1,268 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Sun, 
   Mic, 
   Cpu, 
   Database, 
   ArrowRight, 
-  Globe2, 
-  Leaf, 
-  WifiOff 
+  Play,
+  Pause,
+  Box,
+  Zap,
+  Radio
 } from 'lucide-react';
 
-const FadeIn = ({ children, delay = 0 }) => (
+const FadeIn = ({ children, delay = 0, className = "" }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.8, delay, ease: "easeOut" }}
+    viewport={{ once: true, margin: "-50px" }}
+    transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+    className={className}
   >
     {children}
   </motion.div>
 );
 
+const AudioSample = ({ title, question, answer }) => {
+  const [playing, setPlaying] = useState(false);
+  
+  return (
+    <div 
+      className="bg-white border border-stone-200 p-6 rounded-xl hover:border-black/20 transition-all cursor-pointer group"
+      onClick={() => setPlaying(!playing)}
+    >
+      <div className="flex items-start justify-between mb-4">
+        <div className="w-10 h-10 rounded-full bg-bone flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+          {playing ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+        </div>
+        <div className="text-[10px] font-display font-bold uppercase tracking-wider text-stone-400">Audio Sample 01</div>
+      </div>
+      <h3 className="font-display font-bold text-lg leading-tight mb-2 text-ink">"{question}"</h3>
+      <div className="relative overflow-hidden">
+        <p className="text-stone-500 text-sm leading-relaxed">{answer}</p>
+        {playing && (
+          <motion.div 
+            layoutId="waveform"
+            className="absolute inset-0 bg-white/90 flex items-center gap-1 justify-center"
+          >
+             {[...Array(12)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  animate={{ height: [8, 24, 8] }}
+                  transition={{ repeat: Infinity, duration: 0.8, delay: i * 0.1 }}
+                  className="w-1 bg-black rounded-full"
+                />
+             ))}
+          </motion.div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const SolarOracle = () => {
   return (
-    <div className="min-h-screen bg-[#FDFCF8] text-slate-900 font-sans selection:bg-emerald-900 selection:text-white overflow-x-hidden">
+    <div className="min-h-screen bg-bone text-ink font-sans selection:bg-black selection:text-white overflow-x-hidden">
       
       {/* Navbar */}
-      <nav className="fixed w-full z-50 bg-[#FDFCF8]/80 backdrop-blur-md border-b border-stone-200">
+      <nav className="fixed w-full z-50 bg-bone/80 backdrop-blur-md border-b border-black/5">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-emerald-900 rounded-full flex items-center justify-center">
-              <Sun className="text-[#FDFCF8] w-5 h-5" />
+            <div className="w-6 h-6 bg-black rounded-sm flex items-center justify-center">
+              <div className="w-2 h-2 bg-bone rounded-full"></div>
             </div>
-            <span className="font-bold text-lg tracking-tight text-slate-900">Solar Oracle</span>
+            <span className="font-display font-bold text-lg tracking-tighter text-ink">SOLAR ORACLE (1)</span>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-            <a href="#vision" className="hover:text-emerald-900 transition-colors">Vision</a>
-            <a href="#features" className="hover:text-emerald-900 transition-colors">Technology</a>
-            <button className="bg-slate-900 hover:bg-black text-white px-5 py-2.5 rounded-full transition-colors text-xs font-semibold tracking-wide">
-              Join Waitlist
-            </button>
+          <div className="flex items-center gap-6">
+             <button className="bg-black text-white px-6 py-2 rounded-full text-xs font-medium hover:bg-stone-800 transition-colors">
+               Pre-order
+             </button>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-40 pb-32 container mx-auto px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <FadeIn>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-stone-100 text-emerald-900 text-xs font-semibold uppercase tracking-wider mb-8">
-              <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
-              The Future of Access
-            </div>
-          </FadeIn>
-          
-          <FadeIn delay={0.1}>
-            <h1 className="text-5xl md:text-7xl font-bold leading-[1.1] tracking-tight text-slate-900 mb-8">
-              The Internet,<br />
-              <span className="text-emerald-900">Without the Screen.</span>
-            </h1>
-          </FadeIn>
+      <section className="pt-40 pb-20 container mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="max-w-xl">
+            <FadeIn>
+              <h1 className="font-display font-bold text-6xl md:text-8xl leading-[0.9] tracking-tighter mb-8 text-ink">
+                Internet.<br/>
+                Without<br/>
+                Screens.
+              </h1>
+            </FadeIn>
 
-          <FadeIn delay={0.2}>
-            <p className="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-relaxed mb-12 font-light">
-              The world's first offline, solar-powered speech interface designed to bring universal knowledge to the unconnected billion.
-            </p>
-          </FadeIn>
+            <FadeIn delay={0.2}>
+              <p className="text-lg md:text-xl text-stone-500 leading-relaxed mb-10 max-w-sm">
+                The first offline speech interface for the unconnected world. No grid. No literacy required.
+              </p>
+            </FadeIn>
 
-          <FadeIn delay={0.3}>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button className="bg-emerald-900 hover:bg-emerald-800 text-white px-8 py-4 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-emerald-900/20 w-full sm:w-auto">
-                Read the Whitepaper
-              </button>
-              <button className="bg-white border border-stone-200 hover:border-emerald-900 text-slate-900 px-8 py-4 rounded-full font-medium transition-all w-full sm:w-auto">
-                Join the Waitlist
-              </button>
-            </div>
+            <FadeIn delay={0.3}>
+              <div className="flex gap-4">
+                <button className="border border-black/10 hover:border-black bg-white px-8 py-4 rounded-lg font-medium transition-all text-sm flex items-center gap-2">
+                  Read the Whitepaper <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </FadeIn>
+          </div>
+
+          <FadeIn delay={0.4} className="relative aspect-square bg-stone-200 rounded-3xl overflow-hidden">
+             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1621503348633-8a3d4678125a?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center mix-blend-multiply opacity-50 grayscale"></div>
+             <div className="absolute inset-0 flex items-center justify-center">
+                {/* Conceptual Render Placeholder */}
+                <div className="w-64 h-96 bg-[#2a2a2a] rounded-[3rem] shadow-2xl relative flex flex-col items-center justify-between p-6 border-l border-t border-white/10">
+                   <div className="w-full h-1/2 bg-black/40 rounded-[2rem] border border-white/5 flex items-center justify-center">
+                      <div className="w-24 h-24 rounded-full border border-white/10 flex items-center justify-center">
+                         <div className="w-16 h-16 rounded-full bg-amber-500/20 blur-xl"></div>
+                      </div>
+                   </div>
+                   <div className="w-full grid grid-cols-4 gap-2">
+                      {[...Array(12)].map((_,i) => (
+                        <div key={i} className="w-1 h-1 bg-white/20 rounded-full mx-auto"></div>
+                      ))}
+                   </div>
+                   <div className="text-[10px] font-mono text-white/30 tracking-widest uppercase">
+                      Design Concept 004
+                   </div>
+                </div>
+             </div>
           </FadeIn>
         </div>
-
-        {/* Conceptual Visual Placeholder */}
-        <FadeIn delay={0.5}>
-          <div className="mt-20 relative max-w-5xl mx-auto">
-            <div className="aspect-[16/9] bg-gradient-to-b from-stone-200 to-stone-100 rounded-2xl overflow-hidden shadow-2xl relative flex items-center justify-center">
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
-              {/* Abstract Kiosk Shape */}
-              <div className="relative w-32 h-64 bg-slate-900 rounded-t-full shadow-2xl flex flex-col items-center">
-                 <div className="w-full h-1/3 bg-slate-800 rounded-t-full flex items-center justify-center border-b border-slate-700">
-                    <Sun className="text-emerald-500 w-8 h-8 opacity-80" />
-                 </div>
-                 <div className="w-1 h-20 bg-emerald-500/20 mt-8 rounded-full"></div>
-              </div>
-            </div>
-            <div className="absolute -bottom-10 left-10 md:left-20 bg-white p-6 rounded-xl shadow-xl border border-stone-100 max-w-xs hidden md:block">
-              <div className="flex items-center gap-3 mb-2">
-                 <WifiOff className="w-5 h-5 text-emerald-900" />
-                 <span className="font-bold text-slate-900">Zero Connectivity</span>
-              </div>
-              <p className="text-sm text-slate-500 leading-relaxed">
-                Operating independently of grid and cellular networks.
-              </p>
-            </div>
-          </div>
-        </FadeIn>
       </section>
 
-      {/* The Problem */}
-      <section className="py-32 bg-white">
+      {/* Hear the Difference */}
+      <section className="py-32 border-t border-black/5">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <FadeIn>
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight">
-                2.6 Billion<br />
-                <span className="text-emerald-900">Unconnected.</span>
-              </h2>
+          <FadeIn>
+             <div className="flex items-end justify-between mb-16">
+                <h2 className="font-display font-bold text-4xl tracking-tighter">Hear the<br/>Difference.</h2>
+                <div className="hidden md:block text-stone-400 text-sm max-w-xs text-right">
+                   High-fidelity speech synthesis trained on local dialects and context.
+                </div>
+             </div>
+          </FadeIn>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <FadeIn delay={0.1}>
+              <AudioSample 
+                question="How do I treat a chemical burn?"
+                answer="Rinse with cool water for at least 20 minutes. Remove jewelry. Do not apply ice."
+              />
             </FadeIn>
             <FadeIn delay={0.2}>
-              <div className="space-y-6">
-                <p className="text-lg text-slate-600 leading-relaxed">
-                  For one-third of the global population, human knowledge is locked behind barriers of literacy, electricity, and connectivity.
-                </p>
-                <p className="text-lg text-slate-600 leading-relaxed">
-                  We are removing those barriers. Not by building more cell towers, but by bringing the cloud to the ground.
-                </p>
-              </div>
+              <AudioSample 
+                question="When is the best time to plant maize?"
+                answer="Based on current rainfall patterns in Kenya, planting should begin in mid-March."
+              />
+            </FadeIn>
+            <FadeIn delay={0.3}>
+              <AudioSample 
+                question="Repair guide for Honda generator?"
+                answer="Checking spark plugs... Gap should be 0.7mm. Clean with wire brush."
+              />
             </FadeIn>
           </div>
         </div>
       </section>
 
-      {/* The Solution (Bento Grid) */}
-      <section id="features" className="py-32 bg-[#FDFCF8]">
+      {/* Features Bento Grid */}
+      <section className="py-32 bg-white">
         <div className="container mx-auto px-6">
           <FadeIn>
-            <div className="text-center mb-20">
-              <h2 className="text-3xl font-bold mb-4">Engineered for Access</h2>
-              <p className="text-slate-500">Advanced capabilities. Zero complexity.</p>
-            </div>
+            <h2 className="font-display font-bold text-4xl tracking-tighter mb-16">System Architecture.</h2>
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { 
-                icon: Mic, 
-                title: "Native Voice Interface", 
-                desc: "No reading required. Just speak naturally in local dialects." 
-              },
-              { 
-                icon: Sun, 
-                title: "Zero Grid Dependency", 
-                desc: "Self-sustaining solar architecture. Runs anywhere the sun shines." 
-              },
-              { 
-                icon: Cpu, 
-                title: "Edge Intelligence", 
-                desc: "1.5B parameters of offline reasoning running entirely on-device." 
-              },
-              { 
-                icon: Database, 
-                title: "Infinite Context", 
-                desc: "Localized RAG knowledge base tailored to community needs." 
-              }
-            ].map((feature, i) => (
-              <FadeIn key={i} delay={i * 0.1}>
-                <div className="bg-white p-8 rounded-2xl border border-stone-100 shadow-sm hover:shadow-xl transition-all h-full group">
-                  <div className="w-12 h-12 bg-stone-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-50 transition-colors">
-                    <feature.icon className="w-6 h-6 text-slate-900 group-hover:text-emerald-900 transition-colors" />
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
-                  <p className="text-slate-500 leading-relaxed text-sm">
-                    {feature.desc}
-                  </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 grid-rows-2 gap-4 h-auto md:h-[600px]">
+             
+             {/* Large Card: Voice */}
+             <FadeIn className="md:col-span-2 bg-bone rounded-2xl p-10 flex flex-col justify-between group hover:bg-stone-100 transition-colors relative overflow-hidden">
+                <div className="absolute top-10 right-10 w-32 h-32 bg-orange-500/10 rounded-full blur-3xl group-hover:bg-orange-500/20 transition-colors"></div>
+                <div>
+                   <Mic className="w-8 h-8 mb-6 text-ink" />
+                   <h3 className="font-display font-bold text-2xl tracking-tight mb-2">Native Voice Interface</h3>
+                   <p className="text-stone-500 max-w-sm">Eliminating literacy barriers with sub-200ms latency speech-to-speech interaction.</p>
                 </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
+                <div className="w-full h-12 flex items-end gap-1 opacity-20 group-hover:opacity-40 transition-opacity">
+                   {[...Array(20)].map((_,i) => (
+                      <div key={i} className="w-full bg-black" style={{ height: `${Math.random() * 100}%` }}></div>
+                   ))}
+                </div>
+             </FadeIn>
 
-      {/* The Mission */}
-      <section id="vision" className="py-32 bg-emerald-900 text-white relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
-        
-        <div className="container mx-auto px-6 relative z-10 text-center max-w-3xl">
-          <FadeIn>
-            <Leaf className="w-12 h-12 text-emerald-400 mx-auto mb-8" />
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 tracking-tight">Built for the Middle of Nowhere.</h2>
-            <p className="text-xl text-emerald-100 leading-relaxed mb-12 font-light">
-              Designed to withstand monsoons, heat, and dust. A set-and-forget knowledge node for agriculture, healthcare, and education.
-            </p>
-            <button className="bg-white text-emerald-900 px-8 py-4 rounded-full font-bold hover:bg-emerald-50 transition-colors inline-flex items-center gap-2">
-              Explore the Technology <ArrowRight className="w-4 h-4" />
-            </button>
-          </FadeIn>
+             {/* Tall Card: Solar */}
+             <FadeIn delay={0.2} className="md:row-span-2 bg-[#18181B] text-bone rounded-2xl p-10 flex flex-col justify-between relative overflow-hidden group">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-stone-800 to-transparent opacity-50"></div>
+                <div className="relative z-10">
+                   <Sun className="w-8 h-8 mb-6" />
+                   <h3 className="font-display font-bold text-2xl tracking-tight mb-2">Zero Grid.</h3>
+                   <p className="text-stone-400 text-sm leading-relaxed">
+                      Self-sustaining power architecture. 
+                      <br/><br/>
+                      40W Panel<br/>
+                      LiFePO4 Storage<br/>
+                      60°C Heat Tolerance
+                   </p>
+                </div>
+                <div className="relative z-10 font-mono text-xs text-stone-600 uppercase tracking-widest">
+                   Fig 2.1 — Power
+                </div>
+             </FadeIn>
+
+             {/* Small Card: Offline */}
+             <FadeIn delay={0.3} className="bg-bone rounded-2xl p-8 flex flex-col justify-center group hover:bg-stone-100 transition-colors">
+                <Radio className="w-6 h-6 mb-4 text-ink" />
+                <h3 className="font-display font-bold text-lg tracking-tight">100% Offline</h3>
+                <p className="text-stone-500 text-sm mt-2">No 4G/5G required. Works in total isolation.</p>
+             </FadeIn>
+
+             {/* Small Card: Edge */}
+             <FadeIn delay={0.4} className="bg-bone rounded-2xl p-8 flex flex-col justify-center group hover:bg-stone-100 transition-colors">
+                <Cpu className="w-6 h-6 mb-4 text-ink" />
+                <h3 className="font-display font-bold text-lg tracking-tight">Edge Intelligence</h3>
+                <p className="text-stone-500 text-sm mt-2">1.5B Parameter model running locally.</p>
+             </FadeIn>
+
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 bg-white border-t border-stone-100">
-        <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
-          <div className="flex items-center gap-2 mb-4 md:mb-0">
-            <div className="w-6 h-6 bg-slate-900 rounded-full flex items-center justify-center">
-              <Sun className="text-white w-3 h-3" />
-            </div>
-            <span className="font-bold text-slate-900">Solar Oracle</span>
+      <footer className="py-20 bg-bone border-t border-black/5">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-12">
+             <div className="col-span-2">
+                <span className="font-display font-bold text-lg tracking-tighter text-ink block mb-6">SOLAR ORACLE</span>
+                <p className="text-stone-500 max-w-xs text-sm">
+                   Designing technology for the other 2.6 billion.
+                </p>
+             </div>
+             
+             <div>
+                <h4 className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-6">Explore</h4>
+                <ul className="space-y-4 text-sm font-medium">
+                   <li><a href="#" className="hover:text-stone-500 transition-colors">Vision</a></li>
+                   <li><a href="#" className="hover:text-stone-500 transition-colors">Stories</a></li>
+                   <li><a href="#" className="hover:text-stone-500 transition-colors">Careers</a></li>
+                </ul>
+             </div>
+
+             <div>
+                <h4 className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-6">Technical</h4>
+                <ul className="space-y-4 text-sm font-medium">
+                   <li><a href="https://github.com/tristanclaw/SolarOracle" className="hover:text-stone-500 transition-colors">GitHub Repo</a></li>
+                   <li><a href="#" className="hover:text-stone-500 transition-colors">Hardware BOM</a></li>
+                   <li><a href="#" className="hover:text-stone-500 transition-colors">Model Card</a></li>
+                </ul>
+             </div>
           </div>
           
-          <div className="flex gap-8 text-sm font-medium text-slate-500">
-            <a href="#" className="hover:text-slate-900">Vision</a>
-            <a href="#" className="hover:text-slate-900">Technology</a>
-            <a href="#" className="hover:text-slate-900">Contact</a>
-          </div>
-          
-          <div className="text-sm text-slate-400 mt-4 md:mt-0">
-            © 2026 The Solar Oracle Project.
+          <div className="mt-20 pt-8 border-t border-black/5 flex justify-between items-center text-xs text-stone-400 font-mono">
+             <div>© 2026 Solar Oracle Project</div>
+             <div>Designed in Canada</div>
           </div>
         </div>
       </footer>
