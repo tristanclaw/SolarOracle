@@ -25,43 +25,6 @@ const FadeIn = ({ children, delay = 0, className = "" }) => (
   </motion.div>
 );
 
-const AudioSample = ({ title, question, answer }) => {
-  const [playing, setPlaying] = useState(false);
-  
-  return (
-    <div 
-      className="bg-white border border-stone-200 p-6 rounded-xl hover:border-black/20 transition-all cursor-pointer group"
-      onClick={() => setPlaying(!playing)}
-    >
-      <div className="flex items-start justify-between mb-4">
-        <div className="w-10 h-10 rounded-full bg-bone flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
-          {playing ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
-        </div>
-        <div className="text-[10px] font-display font-bold uppercase tracking-wider text-stone-400">Audio Sample 01</div>
-      </div>
-      <h3 className="font-display font-bold text-lg leading-tight mb-2 text-ink">"{question}"</h3>
-      <div className="relative overflow-hidden">
-        <p className="text-stone-500 text-sm leading-relaxed">{answer}</p>
-        {playing && (
-          <motion.div 
-            layoutId="waveform"
-            className="absolute inset-0 bg-white/90 flex items-center gap-1 justify-center"
-          >
-             {[...Array(12)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  animate={{ height: [8, 24, 8] }}
-                  transition={{ repeat: Infinity, duration: 0.8, delay: i * 0.1 }}
-                  className="w-1 bg-black rounded-full"
-                />
-             ))}
-          </motion.div>
-        )}
-      </div>
-    </div>
-  );
-};
-
 const SolarOracle = () => {
   return (
     <div className="min-h-screen bg-bone text-ink font-sans selection:bg-black selection:text-white overflow-x-hidden">
@@ -131,41 +94,6 @@ const SolarOracle = () => {
                 </div>
              </div>
           </FadeIn>
-        </div>
-      </section>
-
-      {/* Hear the Difference */}
-      <section className="py-32 border-t border-black/5">
-        <div className="container mx-auto px-6">
-          <FadeIn>
-             <div className="flex items-end justify-between mb-16">
-                <h2 className="font-display font-bold text-4xl tracking-tighter">Hear the<br/>Difference.</h2>
-                <div className="hidden md:block text-stone-400 text-sm max-w-xs text-right">
-                   High-fidelity speech synthesis trained on local dialects and context.
-                </div>
-             </div>
-          </FadeIn>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            <FadeIn delay={0.1}>
-              <AudioSample 
-                question="How do I treat a chemical burn?"
-                answer="Rinse with cool water for at least 20 minutes. Remove jewelry. Do not apply ice."
-              />
-            </FadeIn>
-            <FadeIn delay={0.2}>
-              <AudioSample 
-                question="When is the best time to plant maize?"
-                answer="Based on current rainfall patterns in Kenya, planting should begin in mid-March."
-              />
-            </FadeIn>
-            <FadeIn delay={0.3}>
-              <AudioSample 
-                question="Repair guide for Honda generator?"
-                answer="Checking spark plugs... Gap should be 0.7mm. Clean with wire brush."
-              />
-            </FadeIn>
-          </div>
         </div>
       </section>
 
