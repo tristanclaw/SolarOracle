@@ -9,7 +9,9 @@ import {
   ArrowRight,
   Sprout,
   HeartPulse,
-  Wrench
+  Wrench,
+  CheckCircle2,
+  Circle
 } from 'lucide-react';
 
 const FadeIn = ({ children, delay = 0, className = "" }) => (
@@ -40,6 +42,7 @@ const SolarOracle = () => {
                 <a href="#vision" className="hover:text-ink transition-colors">Vision</a>
                 <a href="#knowledge" className="hover:text-ink transition-colors">Knowledge</a>
                 <a href="#specs" className="hover:text-ink transition-colors">Specs</a>
+                <a href="#roadmap" className="hover:text-ink transition-colors">Roadmap</a>
              </div>
              <a 
                href="https://github.com/tristanclaw/SolarOracle" 
@@ -243,43 +246,85 @@ const SolarOracle = () => {
         </div>
       </section>
 
-      {/* Roadmap Section */}
-      <section id="roadmap" className="py-32 bg-bone border-t border-black/5">
+      {/* Project Roadmap */}
+      <section id="roadmap" className="py-32 bg-white border-t border-black/5">
          <div className="container mx-auto px-6">
             <FadeIn>
-               <div className="max-w-4xl mx-auto text-center mb-16">
-                  <h2 className="font-display font-bold text-4xl tracking-tighter mb-4 text-ink">
-                     Project Roadmap.
-                  </h2>
-                  <p className="text-ink/60">We are building in the open. Join us.</p>
-               </div>
+               <h2 className="font-display font-bold text-4xl tracking-tighter mb-20 text-center">Project Roadmap.</h2>
             </FadeIn>
 
-            <div className="max-w-3xl mx-auto space-y-8">
-               {[
-                  { phase: "01", title: "Architecture & Design", status: "Active", desc: "Defining hardware specs, power budget, and RAG pipeline." },
-                  { phase: "02", title: "Prototype Build", status: "Q3 2026", desc: "First physical assembly and thermal testing." },
-                  { phase: "03", title: "Field Trials", status: "Q4 2026", desc: "Deployment of 5 units to partner communities." }
-               ].map((step, i) => (
-                  <FadeIn key={i} delay={i * 0.1} className="flex gap-8 items-start border-b border-black/5 pb-8">
-                     <div className="font-display font-bold text-2xl text-ink/20">{step.phase}</div>
-                     <div>
-                        <div className="flex items-center gap-3 mb-2">
-                           <h3 className="font-display font-bold text-xl">{step.title}</h3>
-                           <span className={`text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full ${step.status === 'Active' ? 'bg-accent text-white' : 'bg-black/5 text-ink/40'}`}>
-                              {step.status}
-                           </span>
-                        </div>
-                        <p className="text-ink/60 text-sm">{step.desc}</p>
-                     </div>
-                  </FadeIn>
-               ))}
+            <div className="max-w-2xl mx-auto relative pl-8 border-l border-ink/10">
+               {/* Phase 1 */}
+               <FadeIn delay={0.1} className="mb-16 relative">
+                  <div className="absolute -left-[41px] top-1.5 w-5 h-5 rounded-full bg-accent border-4 border-white flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
+                  </div>
+                  <div className="flex items-center gap-4 mb-4">
+                     <span className="text-xs font-mono font-bold uppercase tracking-wider text-accent bg-accent/10 px-3 py-1 rounded-full">Current Phase</span>
+                     <span className="text-sm font-mono text-ink/40">Q1 2026</span>
+                  </div>
+                  <h3 className="font-display font-bold text-2xl tracking-tight mb-4 text-ink">Architecture & Definition</h3>
+                  <ul className="space-y-3">
+                     {[
+                        "Define Hardware Stack (Pi 5 + LiFePO4)",
+                        "Select Speech Model (Liquid LFM 1.5B)",
+                        "Establish RAG Knowledge Schema"
+                     ].map((item, i) => (
+                        <li key={i} className="flex items-center gap-3 text-ink font-medium">
+                           <CheckCircle2 className="w-4 h-4 text-accent" />
+                           {item}
+                        </li>
+                     ))}
+                  </ul>
+               </FadeIn>
+
+               {/* Phase 2 */}
+               <FadeIn delay={0.2} className="mb-16 relative opacity-50">
+                  <div className="absolute -left-[41px] top-1.5 w-5 h-5 rounded-full bg-white border-4 border-white ring-1 ring-ink/20"></div>
+                  <div className="flex items-center gap-4 mb-4">
+                     <span className="text-sm font-mono text-ink/40">Q3 2026</span>
+                  </div>
+                  <h3 className="font-display font-bold text-2xl tracking-tight mb-4 text-ink">Prototyping</h3>
+                  <ul className="space-y-3">
+                     {[
+                        "3D Print Enclosure V1",
+                        "First Offline Power Tests",
+                        "Thermal Stress Testing"
+                     ].map((item, i) => (
+                        <li key={i} className="flex items-center gap-3 text-ink">
+                           <Circle className="w-4 h-4 text-ink/20" />
+                           {item}
+                        </li>
+                     ))}
+                  </ul>
+               </FadeIn>
+
+               {/* Phase 3 */}
+               <FadeIn delay={0.3} className="relative opacity-50">
+                  <div className="absolute -left-[41px] top-1.5 w-5 h-5 rounded-full bg-white border-4 border-white ring-1 ring-ink/20"></div>
+                  <div className="flex items-center gap-4 mb-4">
+                     <span className="text-sm font-mono text-ink/40">2027</span>
+                  </div>
+                  <h3 className="font-display font-bold text-2xl tracking-tight mb-4 text-ink">Pilot Deployment</h3>
+                  <ul className="space-y-3">
+                     {[
+                        "Field Deployment: Rift Valley",
+                        "Local Language Training",
+                        "Community Feedback Loop"
+                     ].map((item, i) => (
+                        <li key={i} className="flex items-center gap-3 text-ink">
+                           <Circle className="w-4 h-4 text-ink/20" />
+                           {item}
+                        </li>
+                     ))}
+                  </ul>
+               </FadeIn>
             </div>
          </div>
       </section>
 
       {/* Impact Section */}
-      <section id="impact" className="py-32 bg-white border-t border-black/5">
+      <section id="impact" className="py-32 bg-bone border-t border-black/5">
          <div className="container mx-auto px-6">
             <FadeIn>
                <div className="max-w-4xl mx-auto text-center">
@@ -297,7 +342,7 @@ const SolarOracle = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-20 bg-bone border-t border-black/5">
+      <footer className="py-20 bg-white border-t border-black/5">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-end gap-8">
              <div>
