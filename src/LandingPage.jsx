@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Mic, 
   Cpu, 
@@ -13,329 +13,326 @@ import {
   Activity, 
   Code, 
   Github, 
-  Box, 
-  ArrowRight 
+  Download, 
+  ArrowRight,
+  Play,
+  Terminal,
+  WifiOff,
+  ShieldCheck
 } from 'lucide-react';
 
 const SolarOracle = () => {
+  const [isListening, setIsListening] = useState(false);
+  const [audioLevel, setAudioLevel] = useState(0);
+
+  // Simulated audio visualizer
+  useEffect(() => {
+    if (isListening) {
+      const interval = setInterval(() => {
+        setAudioLevel(Math.random() * 100);
+      }, 100);
+      setTimeout(() => setIsListening(false), 3000); // Stop after 3s
+      return () => clearInterval(interval);
+    } else {
+      setAudioLevel(0);
+    }
+  }, [isListening]);
+
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-200 font-sans selection:bg-amber-500 selection:text-slate-900 overflow-x-hidden">
+    <div className="min-h-screen bg-[#0f172a] text-slate-200 font-sans selection:bg-amber-500 selection:text-slate-900 overflow-x-hidden relative">
+      {/* Noise Texture Overlay */}
+      <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
+      
       {/* Navbar */}
-      <nav className="fixed w-full z-50 bg-slate-900/90 backdrop-blur border-b border-slate-800">
+      <nav className="fixed w-full z-50 bg-[#0f172a]/90 backdrop-blur border-b-2 border-slate-800">
         <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Sun className="text-amber-500 w-6 h-6" />
-            <span className="font-mono font-bold text-lg tracking-wider text-slate-100">SOLAR_ORACLE<span className="text-amber-500 animate-pulse">_</span></span>
+          <div className="flex items-center gap-3">
+            <div className="w-3 h-3 bg-amber-500 rounded-sm animate-pulse shadow-[0_0_10px_rgba(245,158,11,0.5)]"></div>
+            <span className="font-mono font-bold text-lg tracking-wider text-slate-100">SOLAR_ORACLE<span className="text-amber-500">_</span></span>
           </div>
-          <div className="hidden md:flex items-center gap-6 font-mono text-sm text-slate-400">
-            <a href="#how-it-works" className="hover:text-amber-500 transition-colors">LOGIC</a>
-            <a href="#hardware" className="hover:text-amber-500 transition-colors">HARDWARE</a>
-            <a href="#specs" className="hover:text-amber-500 transition-colors">SPECS</a>
-            <a href="https://github.com" className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded border border-slate-700 hover:border-amber-500 transition-all text-slate-200">
+          <div className="hidden md:flex items-center gap-8 font-mono text-sm text-slate-400">
+            <a href="#logic" className="hover:text-amber-500 transition-colors uppercase tracking-widest text-xs">System Logic</a>
+            <a href="#specs" className="hover:text-amber-500 transition-colors uppercase tracking-widest text-xs">Specs</a>
+            <a href="https://github.com/tristanclaw/SolarOracle" className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 px-4 py-2 border border-slate-700 hover:border-amber-500 transition-all text-slate-200 uppercase text-xs font-bold tracking-wider">
               <Github className="w-4 h-4" />
-              <span>REPO</span>
+              <span>Source</span>
             </a>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 container mx-auto px-6">
-        <div className="absolute top-0 right-0 -z-10 opacity-10">
-          <div className="w-96 h-96 bg-amber-500 rounded-full blur-3xl"></div>
+      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 container mx-auto px-6 z-10">
+        <div className="absolute top-0 right-0 -z-10 opacity-20">
+          <div className="w-96 h-96 bg-amber-500 rounded-full blur-[128px]"></div>
         </div>
         
-        <div className="max-w-4xl">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-500 text-xs font-mono mb-6">
-              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-              SYSTEM ONLINE // V2.5
+            <div className="inline-flex items-center gap-2 px-3 py-1 border border-amber-500/30 bg-amber-500/10 text-amber-500 text-xs font-mono mb-8 uppercase tracking-widest">
+              <WifiOff className="w-3 h-3" />
+              <span>Offline • Independent • Resilient</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight text-white mb-6">
-              Zero Connectivity.<br />
-              Zero Literacy.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-200">
-                Universal Knowledge.
-              </span>
+            
+            <h1 className="text-5xl md:text-7xl font-bold leading-none tracking-tight text-white mb-6 font-mono">
+              THE SOLAR<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-200">ORACLE</span>
             </h1>
-            <p className="text-xl text-slate-400 max-w-2xl mb-10 leading-relaxed">
-              An open-source, offline, solar-powered speech interface for the next billion users. 
-              Running <span className="text-slate-200 font-mono bg-slate-800 px-1 rounded">LiquidAI LFM2.5</span> on edge hardware.
+            
+            <p className="text-xl text-slate-400 max-w-xl mb-10 leading-relaxed font-light border-l-2 border-amber-500/50 pl-6">
+              Zero Connectivity. Universal Knowledge. <br/>
+              A ruggedized, speech-to-speech AI kiosk for the next billion users.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-900 px-8 py-4 rounded font-bold transition-all hover:shadow-[0_0_20px_rgba(245,158,11,0.4)]">
-                <Code className="w-5 h-5" />
-                VIEW THE CODE
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+              <a href="https://github.com/tristanclaw/SolarOracle" className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-900 px-8 py-4 font-bold transition-all hover:shadow-[0_0_20px_rgba(245,158,11,0.4)] uppercase tracking-wider font-mono text-sm border-b-4 border-amber-700 hover:border-amber-600 active:border-b-0 active:translate-y-1">
+                <Github className="w-5 h-5" />
+                View Source
+              </a>
+              <button className="flex items-center justify-center gap-2 bg-transparent border-2 border-slate-700 hover:border-slate-500 text-slate-400 hover:text-white px-8 py-4 font-bold transition-all uppercase tracking-wider font-mono text-sm group">
+                <Download className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
+                Build Guide
               </button>
-              <button className="flex items-center justify-center gap-2 bg-transparent border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white px-8 py-4 rounded font-medium transition-all">
-                <Box className="w-5 h-5" />
-                HARDWARE BOM
-              </button>
+            </div>
+
+            {/* Simulated Interaction */}
+            <div className="bg-slate-800/50 border border-slate-700 p-4 rounded max-w-md backdrop-blur-sm">
+               <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-mono text-slate-500 uppercase">System Status</span>
+                  <div className="flex gap-1">
+                    <div className={`w-2 h-2 rounded-full ${isListening ? 'bg-red-500 animate-pulse' : 'bg-slate-600'}`}></div>
+                    <div className="w-2 h-2 rounded-full bg-slate-600"></div>
+                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  </div>
+               </div>
+               
+               <button 
+                onClick={() => setIsListening(!isListening)}
+                className={`w-full h-16 border-2 border-dashed ${isListening ? 'border-amber-500 bg-amber-500/10' : 'border-slate-600 hover:border-slate-500'} rounded flex items-center justify-center gap-3 transition-all group`}
+               >
+                 {isListening ? (
+                   <div className="flex items-center gap-1 h-8">
+                     {[...Array(8)].map((_, i) => (
+                       <motion.div 
+                        key={i}
+                        animate={{ height: [10, Math.random() * 32 + 10, 10] }}
+                        transition={{ duration: 0.2, repeat: Infinity }}
+                        className="w-1.5 bg-amber-500 rounded-full"
+                       />
+                     ))}
+                   </div>
+                 ) : (
+                   <>
+                    <Play className="w-5 h-5 text-amber-500 group-hover:scale-110 transition-transform" />
+                    <span className="font-mono text-sm text-slate-300">INITIATE AUDIO QUERY_</span>
+                   </>
+                 )}
+               </button>
             </div>
           </motion.div>
-        </div>
 
-        {/* Kiosk Placeholder Graphic */}
-        <motion.div 
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="hidden lg:block absolute top-32 right-0 w-1/3 h-[600px] border-l border-slate-800 bg-slate-900/50 backdrop-blur-sm p-8"
-        >
-          <div className="h-full border border-slate-700/50 rounded-lg relative overflow-hidden bg-slate-800/30 flex flex-col items-center justify-center group">
-            <div className="w-32 h-4 bg-slate-700 mb-2"></div>
-            <div className="w-48 h-64 bg-slate-900 border-2 border-slate-700 rounded-xl relative flex items-center justify-center shadow-2xl">
-              <div className="absolute inset-0 bg-amber-500/5 group-hover:bg-amber-500/10 transition-colors"></div>
-              <Mic className="w-12 h-12 text-slate-600 group-hover:text-amber-500 transition-colors" />
-            </div>
-            <div className="w-8 h-48 bg-slate-800 mt-2"></div>
-            <div className="w-32 h-2 bg-slate-700"></div>
-            
-            {/* Solar Roof */}
-            <div className="absolute top-10 w-40 h-24 bg-blue-900/20 border border-blue-500/30 transform -skew-x-12 origin-bottom-left flex items-center justify-center">
-              <Sun className="text-amber-500/50 w-8 h-8" />
-            </div>
-            
-            <div className="absolute bottom-4 left-4 font-mono text-xs text-slate-500">
-              FIG 1.0: FIELD UNIT
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* How It Works */}
-      <section id="how-it-works" className="py-20 bg-slate-950 border-y border-slate-800">
-        <div className="container mx-auto px-6">
-          <div className="flex items-center gap-4 mb-12">
-            <div className="h-px bg-slate-800 flex-1"></div>
-            <h2 className="font-mono text-amber-500 text-sm tracking-widest">SYSTEM_LOGIC // AUDIO RAG</h2>
-            <div className="h-px bg-slate-800 flex-1"></div>
-          </div>
-
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 relative">
-            {/* Flow Steps */}
-            {[
-              { icon: Mic, label: "User Speaks", sub: "Local Dialect" },
-              { icon: Cpu, label: "Pi 5 Processing", sub: "Offline Transcribe" },
-              { icon: Database, label: "RAG Search", sub: "Vector DB Look-up" },
-              { icon: Volume2, label: "LFM2.5 Speaks", sub: "Text-to-Speech" }
-            ].map((step, index) => (
-              <React.Fragment key={index}>
-                <motion.div 
-                  whileHover={{ scale: 1.05 }}
-                  className="w-full md:w-64 p-6 bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl relative group transition-all"
-                >
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <step.icon className="w-10 h-10 text-slate-400 group-hover:text-amber-500 mb-4 transition-colors" />
-                  <h3 className="font-bold text-lg text-slate-200 mb-1">{step.label}</h3>
-                  <p className="font-mono text-xs text-slate-500 uppercase">{step.sub}</p>
-                </motion.div>
-                {index < 3 && (
-                  <ArrowRight className="hidden md:block text-slate-700 w-6 h-6 flex-shrink-0" />
-                )}
-                {index < 3 && (
-                  <div className="md:hidden h-8 w-px bg-slate-700 my-2"></div>
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <span className="inline-block px-4 py-2 bg-slate-900 border border-slate-700 rounded text-sm text-slate-400 font-mono">
-              <span className="text-amber-500">●</span> NO NPU REQUIRED
-            </span>
-          </div>
+          {/* Right Column: Code/Terminal Visual */}
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="relative hidden lg:block"
+          >
+             <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-purple-600 rounded-lg blur opacity-20"></div>
+             <div className="relative bg-[#0d1117] rounded-lg border border-slate-700 shadow-2xl overflow-hidden font-mono text-sm">
+                <div className="bg-slate-800 px-4 py-2 flex items-center gap-2 border-b border-black/50">
+                   <Terminal className="w-4 h-4 text-slate-400" />
+                   <span className="text-slate-400 text-xs">root@solar-oracle:~</span>
+                </div>
+                <div className="p-6 text-slate-300 space-y-2">
+                   <div className="flex gap-2">
+                      <span className="text-green-400">➜</span>
+                      <span>python3 core_loop.py</span>
+                   </div>
+                   <div className="text-slate-500 italic"># Initializing LFM2.5 (1.5B)...</div>
+                   <div className="text-slate-500 italic"># Loading Vector DB... OK</div>
+                   <br/>
+                   <div className="pl-4 border-l-2 border-slate-700">
+                      <span className="text-purple-400">while</span> <span className="text-amber-300">True</span>:<br/>
+                      &nbsp;&nbsp;audio = <span className="text-blue-400">listen</span>(mic)<br/>
+                      &nbsp;&nbsp;query = model.<span className="text-blue-400">transcribe</span>(audio)<br/>
+                      &nbsp;&nbsp;<span className="text-slate-500"># &gt; "How do I treat a burn?"</span><br/>
+                      &nbsp;&nbsp;facts = <span className="text-blue-400">rag_search</span>(query)<br/>
+                      &nbsp;&nbsp;model.<span className="text-blue-400">speak</span>(facts)
+                   </div>
+                   <motion.div 
+                    animate={{ opacity: [0, 1, 0] }}
+                    transition={{ repeat: Infinity, duration: 1 }}
+                    className="w-2 h-4 bg-amber-500 mt-2"
+                   />
+                </div>
+             </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Hardware Stack */}
-      <section id="hardware" className="py-20 container mx-auto px-6">
+      {/* Logic Pipeline */}
+      <section id="logic" className="py-24 bg-[#0b101e] border-y border-slate-800 relative overflow-hidden">
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="font-mono text-amber-500 text-sm tracking-[0.3em] uppercase mb-4">Architecture</h2>
+            <h3 className="text-3xl font-bold text-white">The Knowledge Pipeline</h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+             {[
+               { icon: Mic, title: "Input", desc: "User Speech" },
+               { icon: Cpu, title: "Process", desc: "Pi 5 Inference" },
+               { icon: Database, title: "Retrieval", desc: "Vector Search" },
+               { icon: Volume2, title: "Output", desc: "AI Speech" }
+             ].map((item, i) => (
+               <div key={i} className="relative">
+                  <div className="h-full bg-slate-900 border border-slate-800 p-8 hover:border-amber-500/50 transition-colors group">
+                    <item.icon className="w-10 h-10 text-slate-500 group-hover:text-amber-500 mb-6 transition-colors" />
+                    <h4 className="font-mono text-lg font-bold text-slate-200 mb-2">{item.title}</h4>
+                    <p className="text-slate-500 font-mono text-xs uppercase tracking-wider">{item.desc}</p>
+                    
+                    {/* Connector Line (Mobile hidden) */}
+                    {i < 3 && (
+                      <div className="hidden md:block absolute top-1/2 -right-6 w-8 h-px bg-slate-800 z-20">
+                        <div className="w-2 h-2 bg-slate-800 rotate-45 absolute -right-1 -top-1 border-t border-r border-slate-700"></div>
+                      </div>
+                    )}
+                  </div>
+               </div>
+             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Hardware Bento Grid */}
+      <section id="specs" className="py-24 container mx-auto px-6">
         <h2 className="text-3xl font-bold mb-12 flex items-center gap-3">
           <HardDrive className="text-amber-500" />
-          The Hardware Stack
+          Field Hardware Specs
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { 
-              icon: Cpu, 
-              title: "Compute", 
-              spec: "Raspberry Pi 5 (8GB)", 
-              desc: "Chosen for high-bandwidth GGUF CPU inference without dedicated NPU." 
-            },
-            { 
-              icon: Battery, 
-              title: "Power", 
-              spec: "40W Panel + LiFePO4", 
-              desc: "LiFePO4 chemistry chosen for stability in high heat (up to 60°C)." 
-            },
-            { 
-              icon: HardDrive, 
-              title: "Storage", 
-              spec: "NVMe SSD", 
-              desc: "Industrial grade SSD eliminates SD card corruption risks in power-loss events." 
-            },
-            { 
-              icon: Mic, 
-              title: "Audio", 
-              spec: "USB Mic + Gore Vents", 
-              desc: "IP66 rated assembly with acoustic vents to prevent moisture ingress." 
-            }
-          ].map((item, i) => (
-            <motion.div 
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="bg-slate-800/50 p-6 rounded-lg border border-slate-700 hover:border-amber-500 transition-colors group overflow-hidden relative"
-            >
-              <div className="absolute -right-10 -top-10 w-24 h-24 bg-slate-700/20 rounded-full group-hover:bg-amber-500/10 transition-colors"></div>
-              <item.icon className="w-8 h-8 text-amber-500 mb-4" />
-              <h3 className="text-xl font-bold mb-1">{item.title}</h3>
-              <p className="font-mono text-xs text-amber-500 mb-3">{item.spec}</p>
-              <p className="text-slate-400 text-sm leading-relaxed border-t border-slate-700/50 pt-3 mt-3 opacity-80 group-hover:opacity-100 transition-opacity">
-                {item.desc}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Field Ready / Weatherproofing */}
-      <section className="py-20 bg-gradient-to-b from-slate-900 to-slate-950 border-t border-slate-800">
-        <div className="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-          <div>
-            <div className="inline-flex items-center gap-2 text-amber-500 font-mono text-sm mb-4">
-              <Umbrella className="w-4 h-4" />
-              <span>FIELD HARDENING</span>
-            </div>
-            <h2 className="text-4xl font-bold mb-6">Built for the Monsoon.</h2>
-            <p className="text-slate-400 text-lg mb-8">
-              Hardware fails where people live. The Solar Oracle is engineered to survive 98% humidity, dust storms, and flash floods.
-            </p>
-            
-            <ul className="space-y-4">
-              {[
-                "Passive Chimney Cooling (No moving fans)",
-                "Conformal Coating on all PCB surfaces",
-                "1.5m Flood Elevation Stand",
-                "Thermal throttles tuned for Equatorial Sun"
-              ].map((item, i) => (
-                <li key={i} className="flex items-center gap-3 text-slate-300">
-                  <div className="w-1.5 h-1.5 bg-amber-500 rounded-full"></div>
-                  {item}
-                </li>
-              ))}
-            </ul>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 h-auto lg:h-96">
+          {/* Main Card */}
+          <div className="lg:col-span-2 lg:row-span-2 bg-slate-800/30 border-2 border-slate-700 p-8 relative overflow-hidden group hover:border-amber-500/50 transition-all">
+             <div className="absolute top-0 right-0 p-4 opacity-50">
+               <Cpu className="w-24 h-24 text-slate-700 group-hover:text-amber-500/10 transition-colors" />
+             </div>
+             <h3 className="text-2xl font-bold mb-2">Compute Module</h3>
+             <p className="font-mono text-amber-500 mb-6">Raspberry Pi 5 (8GB)</p>
+             <p className="text-slate-400 leading-relaxed max-w-sm">
+               Selected for high-bandwidth GGUF CPU inference. Delivers 4-5 tokens/sec for speech synthesis without a dedicated NPU.
+             </p>
+             <div className="mt-8 flex gap-2">
+                <span className="px-2 py-1 bg-slate-700 rounded text-xs font-mono">ARM64</span>
+                <span className="px-2 py-1 bg-slate-700 rounded text-xs font-mono">2.4GHz</span>
+             </div>
           </div>
-          
-          <div className="bg-slate-800 p-8 rounded-xl border border-slate-700 relative">
-            <div className="absolute top-0 right-0 p-4 font-mono text-xs text-slate-500">
-              THERMAL_STATUS: NOMINAL
-            </div>
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Thermometer className="text-red-400" />
-                  <span className="font-mono text-sm">Internal Temp</span>
-                </div>
-                <span className="font-mono text-amber-500">42°C</span>
-              </div>
-              <div className="w-full h-2 bg-slate-700 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-green-500 to-amber-500 w-3/4"></div>
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Activity className="text-blue-400" />
-                  <span className="font-mono text-sm">Humidity</span>
-                </div>
-                <span className="font-mono text-blue-400">89%</span>
-              </div>
-              <div className="w-full h-2 bg-slate-700 rounded-full overflow-hidden">
-                <div className="h-full bg-blue-500 w-[89%]"></div>
-              </div>
-            </div>
+
+          {/* Sub Cards */}
+          <div className="bg-slate-800/30 border-2 border-slate-700 p-6 hover:border-amber-500/50 transition-all group">
+             <Battery className="w-8 h-8 text-amber-500 mb-4" />
+             <h4 className="font-bold text-lg">Power</h4>
+             <p className="text-xs font-mono text-slate-500 mt-1 mb-2">LiFePO4 + 40W Panel</p>
+             <div className="h-px bg-slate-700 w-full my-3"></div>
+             <p className="text-xs text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
+               Heat tolerant up to 60°C. &gt;2000 cycles.
+             </p>
+          </div>
+
+          <div className="bg-slate-800/30 border-2 border-slate-700 p-6 hover:border-amber-500/50 transition-all group">
+             <HardDrive className="w-8 h-8 text-amber-500 mb-4" />
+             <h4 className="font-bold text-lg">Storage</h4>
+             <p className="text-xs font-mono text-slate-500 mt-1 mb-2">NVMe SSD 256GB</p>
+             <div className="h-px bg-slate-700 w-full my-3"></div>
+             <p className="text-xs text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
+               Prevents SD card corruption on power loss.
+             </p>
+          </div>
+
+          <div className="lg:col-span-2 bg-slate-800/30 border-2 border-slate-700 p-6 flex items-center justify-between hover:border-amber-500/50 transition-all">
+             <div>
+               <h4 className="font-bold text-lg flex items-center gap-2">
+                 <Mic className="w-5 h-5 text-amber-500" />
+                 Audio Array
+               </h4>
+               <p className="text-sm text-slate-400 mt-2">IP66 Waterproof Mic + Gore Acoustic Vents</p>
+             </div>
+             <div className="text-right hidden sm:block">
+               <div className="text-xs font-mono text-slate-500">SENSITIVITY</div>
+               <div className="text-amber-500 font-bold">-42dB ±3dB</div>
+             </div>
           </div>
         </div>
       </section>
 
-      {/* Code Snippet */}
-      <section className="py-20 container mx-auto px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-[#1e1e1e] rounded-xl overflow-hidden shadow-2xl border border-slate-700">
-            <div className="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2 border-b border-black/20">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
-              </div>
-              <span className="ml-4 font-mono text-xs text-slate-400">core_loop.py</span>
-            </div>
-            <div className="p-6 overflow-x-auto">
-              <pre className="font-mono text-sm leading-relaxed">
-                <span className="text-slate-500"># The Infinite Knowledge Loop</span>{'\n'}
-                <span className="text-purple-400">while</span> <span className="text-yellow-200">True</span>:{'\n'}
-                {'    '}audio = <span className="text-blue-400">listen</span>(mic){'\n'}
-                {'    '}query = model.<span className="text-blue-400">transcribe</span>(audio){'\n'}
-                {'    '}facts = <span className="text-blue-400">search_offline_db</span>(query){'\n'}{'\n'}
-                {'    '}<span className="text-slate-500"># The magic: Injecting facts into the speech stream</span>{'\n'}
-                {'    '}model.<span className="text-blue-400">speak</span>({'\n'}
-                {'        '}system_prompt=facts,{'\n'}
-                {'        '}user_audio=audio{'\n'}
-                {'    '})
-              </pre>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Use Cases */}
-      <section className="py-20 bg-slate-950">
+      {/* Monsoon Defense */}
+      <section className="py-20 bg-[#0f172a] border-t border-slate-800">
         <div className="container mx-auto px-6">
-          <h2 className="text-center text-2xl font-bold mb-16 text-slate-200">Deployed for Impact</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { title: "Healthcare", query: "How do I treat a burn?", color: "border-red-500/30" },
-              { title: "Agriculture", query: "When should I plant maize?", color: "border-green-500/30" },
-              { title: "Maintenance", query: "My generator is making a clicking sound.", color: "border-blue-500/30" },
-            ].map((useCase, i) => (
-              <div key={i} className={`p-8 bg-slate-900 border ${useCase.color} rounded-lg relative hover:-translate-y-1 transition-transform`}>
-                <h3 className="text-xs font-mono uppercase tracking-widest text-slate-500 mb-4">{useCase.title}</h3>
-                <div className="flex gap-3">
-                  <div className="w-1 h-full bg-slate-800 rounded-full"></div>
-                  <p className="text-lg font-medium text-slate-200 italic">"{useCase.query}"</p>
-                </div>
-              </div>
-            ))}
+          <div className="bg-slate-900 border border-slate-800 p-8 md:p-12 rounded-xl relative overflow-hidden">
+             {/* Decorative Warning Stripe */}
+             <div className="absolute top-0 left-0 w-2 h-full bg-repeating-linear-gradient(45deg, #f59e0b, #f59e0b 10px, #0f172a 10px, #0f172a 20px)"></div>
+             
+             <div className="grid md:grid-cols-2 gap-12 items-center relative z-10">
+               <div>
+                  <div className="flex items-center gap-2 text-amber-500 font-mono text-xs uppercase tracking-widest mb-4">
+                    <ShieldCheck className="w-4 h-4" />
+                    <span>Environmental Hardening</span>
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Monsoon Defense</h2>
+                  <p className="text-slate-400 mb-8">
+                    Engineered for the harshest climates. We assume the hardware will be rained on, overheated, and covered in dust.
+                  </p>
+                  
+                  <div className="space-y-4 font-mono text-sm">
+                    {[
+                      { label: "PCB Protection", val: "Acrylic Conformal Coating" },
+                      { label: "Flood Safety", val: "1.5m Steel Elevation Stand" },
+                      { label: "Cooling", val: "Passive Chimney Effect (Fanless)" },
+                      { label: "Ingress", val: "IP65 Enclosure Rating" },
+                    ].map((spec, i) => (
+                      <div key={i} className="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <span className="text-slate-500">{spec.label}</span>
+                        <span className="text-amber-500">{spec.val}</span>
+                      </div>
+                    ))}
+                  </div>
+               </div>
+               
+               <div className="h-64 bg-slate-950 rounded-lg border border-slate-800 flex items-center justify-center relative">
+                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516912481808-3406841bd33c?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center opacity-20 mix-blend-overlay"></div>
+                  <Umbrella className="w-20 h-20 text-slate-700 relative z-10" />
+                  <div className="absolute bottom-4 right-4 text-xs font-mono text-slate-600">
+                    TEST_ID: H2O_RESIST_01
+                  </div>
+               </div>
+             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-slate-800 bg-slate-900">
-        <div className="container mx-auto px-6 text-center">
-          <div className="flex items-center justify-center gap-2 mb-8">
-            <Sun className="text-amber-500 w-6 h-6" />
-            <span className="font-bold text-xl tracking-tight text-white">SOLAR_ORACLE</span>
+      <footer className="py-12 border-t border-slate-800 bg-[#0b101e]">
+        <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
+          <div className="mb-8 md:mb-0">
+            <div className="flex items-center gap-2 mb-2">
+              <Sun className="text-amber-500 w-5 h-5" />
+              <span className="font-bold text-lg tracking-tight text-white font-mono">SOLAR_ORACLE</span>
+            </div>
+            <p className="text-xs text-slate-500 font-mono">
+              MIT License 2026. Open Source Hardware.
+            </p>
           </div>
           
-          <div className="flex justify-center gap-8 mb-12 font-mono text-sm text-slate-400">
-            <a href="#" className="hover:text-amber-500">LiquidAI Model Card</a>
-            <a href="#" className="hover:text-amber-500">Build Guide</a>
-            <a href="#" className="hover:text-amber-500">Donate</a>
+          <div className="flex gap-8 font-mono text-xs text-slate-400 uppercase tracking-wider">
+            <a href="#" className="hover:text-amber-500">Model Card</a>
+            <a href="#" className="hover:text-amber-500">Assembly Docs</a>
+            <a href="#" className="hover:text-amber-500">Contributors</a>
           </div>
-          
-          <p className="font-mono text-xs text-slate-600">
-            Built for the field. Powered by the sun. <br />
-            MIT License 2026.
-          </p>
         </div>
       </footer>
     </div>
